@@ -4,7 +4,7 @@ terraform {
     resource_group_name  = "initial"
     storage_account_name = "initialst"
     container_name       = "initial-container"
-    key                  = "lWKwh8YDZgylLAnaWX4x/FCjeWcI4sPptH27aIvXFAqB6k+inYXDRlJbJLbMkkcIZdhEpv/JgUIPKglv7wMLfg=="
+    key                  = "***"
   }
 }
 
