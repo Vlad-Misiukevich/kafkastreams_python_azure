@@ -1,12 +1,17 @@
 # Setup azurerm as a state backend
 terraform {
   backend "azurerm" {
+    resource_group_name  = "initial"
+    storage_account_name = "initialst"
+    container_name       = "initial-container"
+    key                  = "lWKwh8YDZgylLAnaWX4x/FCjeWcI4sPptH27aIvXFAqB6k+inYXDRlJbJLbMkkcIZdhEpv/JgUIPKglv7wMLfg=="
   }
 }
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
+  subscription_id = "45a58420-2e1a-4ba1-b23b-c55612222ef5"
 }
 
 data "azurerm_client_config" "current" {}
@@ -29,7 +34,7 @@ resource "azurerm_storage_account" "bdcc" {
   depends_on = [
     azurerm_resource_group.bdcc]
 
-  name = "st${var.ENV}${var.LOCATION}"
+  name = "st${var.ENV}"
   resource_group_name = azurerm_resource_group.bdcc.name
   location = azurerm_resource_group.bdcc.location
   account_tier = "Standard"
@@ -76,7 +81,7 @@ resource "azurerm_kubernetes_cluster" "bdcc" {
   default_node_pool {
     name       = "default"
     node_count = 1
-    vm_size    = "Standard_D2_v2"
+    vm_size    = "standard_L4s"
   }
 
   identity {
