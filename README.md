@@ -98,6 +98,7 @@ source-cc-expedia.json" -H "Content-Type: application/json" -X POST http://local
 `select stay_category, count(hotel_id) as hotel_count from hotelviews group by stay_category emit changes;`
 ![img_30.png](images/img_30.png)
 26. Total amount of distinct hotels for each category:  
+`select stay_category, count_distinct(hotel_id) as hotel_count from hotelviews group by stay_category emit changes;`
 ![img_31.png](images/img_31.png)
 27. Create stream for common data visualization in kafka topic:  
 `create stream visualization (id bigint, srch_ci varchar, srch_o varchar, hotel_id bigint, date_time varchar, stay_category varchar) with (kafka_topic = 'expedia_ext', value_format='json');`
