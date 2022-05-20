@@ -1,4 +1,3 @@
-import datetime
 from dateutil.parser import parse as parse_date
 import faust
 import logging
@@ -43,9 +42,17 @@ async def handle(messages):
         if message is None:
             logger.info('No messages')
             continue
-
-        #Transform your records here
-
+        data = message.dumps()
+        if (parse_date(message.srch_co) - parse_date(message.srch_ci)).days > 14:
+            stay_category = "Long stay"
+        elif 10 < (parse_date(message.srch_co) - parse_date(message.srch_ci)).days <= 14:
+            stay_category = "Standard extended stay"
+        elif 4 < (parse_date(message.srch_co) - parse_date(message.srch_ci)).days <= 10:
+            stay_category = "Standard stay"
+        elif 0 < (parse_date(message.srch_co) - parse_date(message.srch_ci)).days <= 4:
+            stay_category = "Short stay"
+        else:
+            stay_category = "Erroneous data"
         yield ExpediaExtRecord(**data, stay_category=stay_category)
 
 
